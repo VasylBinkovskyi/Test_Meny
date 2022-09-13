@@ -1,6 +1,7 @@
 #include <Arduino.h>
 #include <KeyCreator.h>
 
+
 KeyCreator::KeyCreator(uint8_t pinNum, bool logic)
 {
     PinNum = pinNum;
@@ -10,9 +11,6 @@ KeyCreator::KeyCreator(uint8_t pinNum, bool logic)
 
 int KeyCreator::DigitalKeyState()
 {
-    static unsigned long debouncTimer = 0;
-    static uint8_t buttonFlag = 0;
-
     if (digitalRead(PinNum) != Logic)
     {
         debouncTimer = millis();
