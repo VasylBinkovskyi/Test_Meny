@@ -13,22 +13,15 @@
 #define DEFAULT_HANDLER 0xff
 
 LiquidCrystalRus lcd(ADRESS, 16, 2); // set the LCD address to 0x27 for a 16 chars and 2 line display
+  KeyCreator DownKey(DOWN, true);
+  KeyCreator UpKey(UP, true);
+  KeyCreator OkKey(OK, true);
+  KeyCreator BackKey(BACK, true);
 
 
 void RelaySettings(uint8_t *id)
 {
-  static MenuCreator menuTree(&lcd);
-  if (!menuTree.isCreated)
-  {
-    menuTree.createMenu("Налаштування реле", RelaySettings);
-    // menuTree.createMenu("Time_1", STime);
-    // menuTree.createMenu("Inputs_1", SInputs);
-  }
-  else
-  {
-    menuTree.show();
-  }
-  menuTree.backMenu(id);
+
 }
 void RelayDosSettings(uint8_t *id)
 {
@@ -49,10 +42,10 @@ void WorkingSettings(uint8_t *id)
 {
 
   static MenuCreator menuTree(&lcd);
-  static KeyCreator DownKey(DOWN, true);
-  static KeyCreator UpKey(UP, true);
-  static KeyCreator OkKey(OK, true);
-  static KeyCreator BackKey(BACK, true);
+  // static KeyCreator DownKey(DOWN, true);
+  // static KeyCreator UpKey(UP, true);
+  // static KeyCreator OkKey(OK, true);
+  // static KeyCreator BackKey(BACK, true);
   if (!menuTree.isCreated)
   {
     menuTree.createMenu("Налашт. реле", RelaySettings);
@@ -84,6 +77,7 @@ void WorkingSettings(uint8_t *id)
   }
   if (BackKey.DigitalKeyState())
   {
+    lcd.clear();
     menuTree.backMenu(id);
   }
 }
@@ -96,10 +90,6 @@ void ResetTimers(uint8_t *id)
 void AdditionalSettings(uint8_t *id)
 {
   static MenuCreator menuTree(&lcd);
-  static KeyCreator DownKey(DOWN, true);
-  static KeyCreator UpKey(UP, true);
-  static KeyCreator OkKey(OK, true);
-  static KeyCreator BackKey(BACK, true);
   if (!menuTree.isCreated)
   {
     menuTree.createMenu("Скидання налаштувань", ResetSettings);
@@ -127,6 +117,7 @@ void AdditionalSettings(uint8_t *id)
   }
   if (BackKey.DigitalKeyState())
   {
+    lcd.clear();
     menuTree.backMenu(id);
   }
 }
@@ -167,10 +158,6 @@ void loop()
 {
   
   static MenuCreator menuTree(&lcd);
-  static KeyCreator DownKey(DOWN, true);
-  static KeyCreator UpKey(UP, true);
-  static KeyCreator OkKey(OK, true);
-  static KeyCreator BackKey(BACK, true);
   if (!menuTree.isCreated)
   {
     menuTree.createMenu("Налашт. роботи", WorkingSettings);
@@ -189,17 +176,17 @@ void loop()
   }
   if (DownKey.DigitalKeyState())
   {
-    //lcd.clear();
+    lcd.clear();
     menuTree.moveCursor(menuTree.CURSOR_DOWN);
   }
   if (UpKey.DigitalKeyState())
   {
-    //lcd.clear();
+    lcd.clear();
     menuTree.moveCursor(menuTree.CURSOR_UP);
   }
   if (OkKey.DigitalKeyState())
   {
-    //lcd.clear();
+    lcd.clear();
     menuTree.moveCursor(menuTree.CURSOR_OK);
   }
 }
